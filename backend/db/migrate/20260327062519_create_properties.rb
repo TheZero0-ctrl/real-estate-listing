@@ -1,7 +1,7 @@
 class CreateProperties < ActiveRecord::Migration[8.1]
   def change
     create_table :properties do |t|
-      t.references :agent, null: false, foreign_key: true, index: false
+      t.references :agent, null: false, foreign_key: true
       t.string :title, null: false
       t.string :headline
       t.text :description

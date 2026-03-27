@@ -6,8 +6,10 @@ module Api
       def index
         relation = Listings::FilterQuery.call(Property.visible_to(is_admin?), listing_params)
         page, per_page = pagination_params
+        total_count = relation.except(:select, :joins, :includes, :preload, :eager_load, :order).count
 
-        pagy, listings = pagy(:offset, relation, page:, limit: per_page)
+        pagy, paginated_relation = pagy(:offset, relation, page:, limit: per_page, count: total_count)
+        listings = Listings::FilterQuery.with_index_projection(paginated_relation)
 
         render json: {
           data: listings.map { |listing| Api::V1::ListingCardPresenter.new(listing).as_json },
@@ -29,7 +31,20 @@ module Api
       private
 
       def listing_params
-        params.permit(:price_min, :price_max, :beds, :baths, :property_type, :suburb, :keyword, :listing_status, sort: %i[key direction])
+        params.permit(
+          :price_min,
+          :price_max,
+          :beds,
+          :baths,
+          :property_type,
+          :suburb,
+          :keyword,
+          :listing_status,
+          :page,
+          :per_page,
+          :format,
+          sort: %i[key direction]
+        )
       end
     end
   end

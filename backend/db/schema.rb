@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_27_062519) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_27_130500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,6 +43,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_062519) do
     t.string "thumbnail_url"
     t.string "title", null: false
     t.datetime "updated_at", null: false
+    t.index "lower((suburb)::text), listing_status", name: "index_properties_on_lower_suburb_status"
+    t.index ["agent_id"], name: "index_properties_on_agent_id"
+    t.index ["created_at", "id"], name: "index_properties_on_created_at_id"
+    t.index ["listing_status", "bathrooms"], name: "index_properties_on_status_bathrooms"
+    t.index ["listing_status", "bedrooms"], name: "index_properties_on_status_bedrooms"
+    t.index ["listing_status", "created_at"], name: "index_properties_on_status_created"
+    t.index ["listing_status", "price_cents"], name: "index_properties_on_status_price"
+    t.index ["listing_status", "property_type"], name: "index_properties_on_status_property_type"
     t.check_constraint "bathrooms >= 0::numeric", name: "properties_bathrooms_non_negative"
     t.check_constraint "bedrooms >= 0", name: "properties_bedrooms_non_negative"
     t.check_constraint "price_cents >= 0", name: "properties_price_cents_non_negative"

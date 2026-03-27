@@ -76,7 +76,7 @@ statuses = listing_statuses.flat_map { |status, count| Array.new(count, status) 
     bathrooms:,
     property_type:,
     listing_status: status,
-    internal_status_notes: (status == "draft" ? "Needs final photo selection before publish." : nil),
+    internal_status_notes: "Needs final photo selection before publish.",
     published_at: (status == "active" ? rng.rand(1..120).days.ago : nil),
     thumbnail_url: "https://picsum.photos/seed/property-#{index + 1}/800/600"
   )

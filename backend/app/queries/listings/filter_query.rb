@@ -3,6 +3,7 @@
 module Listings
   class FilterQuery < ApplicationQuery
     SORT_KEYS = {
+      "created" => :created_at,
       "published" => :published_at,
       "price" => :price_cents,
       "beds" => :bedrooms,
@@ -10,7 +11,7 @@ module Listings
     }.freeze
 
     SORT_DIRECTIONS = %w[asc desc].freeze
-    DEFAULT_SORT_KEY = "published"
+    DEFAULT_SORT_KEY = "created"
     DEFAULT_SORT_DIRECTION = "desc"
 
     INDEX_SELECT_COLUMNS = %w[
@@ -41,8 +42,11 @@ module Listings
       result = filter_by_beds(result)
       result = filter_by_baths(result)
       result = filter_by_keyword(result)
-      result = select_index_fields(result)
       apply_sort(result)
+    end
+
+    def self.with_index_projection(relation)
+      relation.joins(:agent).select(*INDEX_SELECT_COLUMNS, Arel.sql("agents.full_name AS agent_name"))
     end
 
     private
@@ -122,10 +126,6 @@ module Listings
       else
         relation.order(column => direction, id: direction)
       end
-    end
-
-    def select_index_fields(relation)
-      relation.joins(:agent).select(*INDEX_SELECT_COLUMNS, Arel.sql("agents.full_name AS agent_name"))
     end
 
     def normalized_sort_key
