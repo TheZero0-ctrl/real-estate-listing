@@ -1,0 +1,39 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  agent: one
+  title: Riverside family home
+  headline: Renovated and move-in ready
+  description: Spacious four-bedroom home close to schools.
+  street_address: 12 River Lane
+  suburb: Pokhara
+  state: Gandaki
+  postcode: 33700
+  country: Nepal
+  price_cents: 85000000
+  bedrooms: 4
+  bathrooms: 2.5
+  property_type: house
+  listing_status: active
+  internal_status_notes: Prioritize weekend inspections.
+  published_at: 2026-03-27 12:10:19
+  thumbnail_url: https://example.com/images/property-one.jpg
+
+two:
+  agent: two
+  title: City view apartment
+  headline: Great first-home option
+  description: Modern apartment with open-plan living.
+  street_address: 8 Skyline Road
+  suburb: Kathmandu
+  state: Bagmati
+  postcode: 44600
+  country: Nepal
+  price_cents: 42000000
+  bedrooms: 2
+  bathrooms: 1.0
+  property_type: apartment
+  listing_status: draft
+  internal_status_notes: Hold for staging photos.
+  published_at: 2026-03-27 12:10:19
+  thumbnail_url: https://example.com/images/property-two.jpg
