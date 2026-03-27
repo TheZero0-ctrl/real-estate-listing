@@ -41,11 +41,21 @@ yarn-error.log*
 /frontend/next-env.d.ts
 
 # rails backend
+
+# Ignore all environment files.
+/backend/.env*
+
 /backend/.bundle
 /backend/log/*
 !/backend/log/.keep
 /backend/tmp/*
 !/backend/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/backend/tmp/pids/*
+!/backend/tmp/pids/
+!/backend/tmp/pids/.keep
+
 /backend/storage/*
 !/backend/storage/.keep
 /backend/public/assets
@@ -56,3 +66,8 @@ yarn-error.log*
 /backend/db/*.sqlite3
 /backend/db/*.sqlite3-*
 /backend/config/master.key
+
+/backend/app/assets/builds/*
+!/backend/app/assets/builds/.keep
+
+/backend/node_modules
