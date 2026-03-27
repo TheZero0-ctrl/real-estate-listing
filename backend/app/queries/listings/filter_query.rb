@@ -17,6 +17,7 @@ module Listings
       properties.id
       properties.title
       properties.headline
+      properties.listing_status
       properties.suburb
       properties.state
       properties.price_cents
@@ -33,6 +34,7 @@ module Listings
 
     def call
       result = @relation
+      result = filter_by_listing_status(result)
       result = filter_by_suburb(result)
       result = filter_by_property_type(result)
       result = filter_by_price_range(result)
@@ -54,6 +56,14 @@ module Listings
       return relation if suburb.blank?
 
       relation.where("LOWER(properties.suburb) = ?", suburb.downcase)
+    end
+
+    def filter_by_listing_status(relation)
+      listing_status = @params[:listing_status].to_s.strip
+      return relation if listing_status.blank?
+      return relation unless Property.listing_statuses.key?(listing_status)
+
+      relation.where(listing_status: listing_status)
     end
 
     def filter_by_property_type(relation)

@@ -17,11 +17,11 @@ module Api
         payload = response_payload
         listing = payload.fetch("data").find { |item| item.fetch("id") == property.id }
 
-        assert_equal Property.visible_scope(false).count, payload.dig("meta", "total_count")
+        assert_equal Property.visible_to(false).count, payload.dig("meta", "total_count")
         assert_not_nil listing
         assert_equal property.title, listing.fetch("title")
         assert_equal property.agent.full_name, listing.fetch("agent_name")
-        assert_nil listing["agent"]
+        assert_equal property.listing_status, listing.fetch("listing_status")
       end
 
       test "index applies filters and ignores invalid values" do
@@ -77,6 +77,29 @@ module Api
         assert_operator low_index, :<, high_index
       end
 
+      test "index includes sold listings for public users" do
+        sold_listing = create_property(listing_status: "sold", suburb: "PublicTown")
+
+        get "/api/v1/listings", params: { suburb: "publictown" }
+
+        assert_response :success
+
+        ids = response_payload.fetch("data").map { |item| item.fetch("id") }
+        assert_includes ids, sold_listing.id
+      end
+
+      test "index supports listing status filter for public users" do
+        create_property(listing_status: "active", suburb: "StatusVille")
+        sold_listing = create_property(listing_status: "sold", suburb: "StatusVille")
+
+        get "/api/v1/listings", params: { suburb: "statusville", listing_status: "sold" }
+
+        assert_response :success
+
+        ids = response_payload.fetch("data").map { |item| item.fetch("id") }
+        assert_equal [ sold_listing.id ], ids
+      end
+
       test "index supports pagination metadata" do
         3.times do |index|
           create_property(
@@ -98,14 +121,22 @@ module Api
         assert_equal 1, payload.fetch("data").size
       end
 
-      test "show hides admin fields for public requests" do
+      test "show hides internal status notes for public requests" do
         get "/api/v1/listings/#{properties(:one).id}"
 
         assert_response :success
 
         payload = response_payload.fetch("data")
-        assert_nil payload["listing_status"]
+        assert_equal properties(:one).listing_status, payload.fetch("listing_status")
         assert_nil payload["internal_status_notes"]
+      end
+
+      test "show returns sold listing in public mode" do
+        sold_listing = create_property(listing_status: "sold")
+
+        get "/api/v1/listings/#{sold_listing.id}"
+
+        assert_response :success
       end
 
       test "show returns not found for draft listing in public mode" do
