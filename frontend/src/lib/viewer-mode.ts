@@ -1,7 +1,7 @@
+import type { ViewerMode } from "@/types/listings";
+
 export const VIEWER_STORAGE_KEY = "listing_viewer_mode";
 export const VIEWER_MODE_CHANGED_EVENT = "viewer-mode-changed";
-
-export type ViewerMode = "user" | "admin";
 
 export function getViewerModeSnapshot(): ViewerMode {
   if (typeof window === "undefined") {

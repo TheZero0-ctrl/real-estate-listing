@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+
 import ViewerModeToggle from "@/components/listings/viewer-mode-toggle";
 
 export default function Home() {

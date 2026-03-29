@@ -17,6 +17,10 @@ export default function ViewerModeToggle() {
 
   const adminModeEnabled = viewerMode === "admin";
 
+  const handleSetMode = (mode: "user" | "admin") => {
+    setViewerMode(mode);
+  };
+
   return (
     <div className="flex items-center gap-2">
       <span className="text-sm font-medium text-[var(--foreground)]">Viewer mode</span>
@@ -28,7 +32,7 @@ export default function ViewerModeToggle() {
       >
         <button
           type="button"
-          onClick={() => setViewerMode("user")}
+          onClick={() => handleSetMode("user")}
           className={`cursor-pointer rounded-full px-3 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f4f4a] focus-visible:ring-offset-1 focus-visible:ring-offset-[#f4efe6] ${
             adminModeEnabled
               ? "text-[#4f4a41]"
@@ -41,7 +45,7 @@ export default function ViewerModeToggle() {
 
         <button
           type="button"
-          onClick={() => setViewerMode("admin")}
+          onClick={() => handleSetMode("admin")}
           className={`cursor-pointer rounded-full px-3 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f4f4a] focus-visible:ring-offset-1 focus-visible:ring-offset-[#f4efe6] ${
             adminModeEnabled
               ? "bg-[#1f4f4a] text-white shadow-sm"
