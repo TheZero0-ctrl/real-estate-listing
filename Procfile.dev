@@ -1,0 +1,2 @@
+backend: cd backend && bin/rails server -p ${PORT:-3000}
+frontend: NEXT_PUBLIC_BACKEND_API_BASE_URL=${NEXT_PUBLIC_BACKEND_API_BASE_URL:-http://127.0.0.1:3000} npm --prefix frontend run dev

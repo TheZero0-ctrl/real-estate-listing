@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+set -eu
+
+echo "==> Setting up backend"
+(
+  cd backend
+  bundle install
+  bin/rails db:prepare db:seed
+)
+
+echo "==> Setting up frontend"
+npm --prefix frontend install
+
+echo "==> Setup complete"
