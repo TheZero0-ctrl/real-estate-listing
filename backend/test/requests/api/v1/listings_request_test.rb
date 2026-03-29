@@ -22,6 +22,7 @@ module Api
         assert_equal property.title, listing.fetch("title")
         assert_equal property.agent.full_name, listing.fetch("agent_name")
         assert_equal property.listing_status, listing.fetch("listing_status")
+        assert_equal property.price_cents / 100.0, listing.fetch("price")
       end
 
       test "index applies filters and ignores invalid values" do
@@ -128,6 +129,8 @@ module Api
 
         payload = response_payload.fetch("data")
         assert_equal properties(:one).listing_status, payload.fetch("listing_status")
+        assert_equal properties(:one).price_cents / 100.0, payload.fetch("price")
+        assert_equal "RS", payload.fetch("currency")
         assert_nil payload["internal_status_notes"]
       end
 

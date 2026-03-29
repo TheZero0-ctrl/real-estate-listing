@@ -19,12 +19,17 @@ module Api
           listing_status: listing.listing_status,
           suburb: listing.suburb,
           state: listing.state,
-          price_cents: listing.price_cents,
+          price: money_amount,
+          currency: "RS",
           bedrooms: listing.bedrooms,
           bathrooms: listing.bathrooms,
           property_type: listing.property_type,
           thumbnail_url: listing.thumbnail_url
         }
+      end
+
+      def money_amount
+        (listing.price_cents.to_f / 100).round(2)
       end
 
       def agent_payload
