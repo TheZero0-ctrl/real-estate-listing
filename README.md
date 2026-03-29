@@ -102,6 +102,99 @@ curl "http://localhost:3000/api/v1/listings/1"
 curl -H "X-Admin: true" "http://localhost:3000/api/v1/listings/1"
 ```
 
+Sample `/api/v1/listings` response:
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Garden Villa in Bharatpur",
+      "headline": "Townhouse with 3 bed, 1.0 bath",
+      "listing_status": "active",
+      "suburb": "Bharatpur",
+      "state": "Bagmati",
+      "price": 740522.53,
+      "currency": "RS",
+      "bedrooms": 3,
+      "bathrooms": "1.0",
+      "property_type": "townhouse",
+      "thumbnail_url": "https://picsum.photos/seed/property-100/800/600",
+      "agent_name": "Nischal Thapa"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 1,
+    "total_count": 85,
+    "total_pages": 85
+  }
+}
+```
+
+Sample `/api/v1/listings/1` response (public):
+
+```json
+{
+  "data": {
+    "id": 1,
+    "title": "Garden Villa in Bharatpur",
+    "headline": "Townhouse with 3 bed, 1.0 bath",
+    "listing_status": "active",
+    "suburb": "Bharatpur",
+    "state": "Bagmati",
+    "price": 740522.53,
+    "currency": "RS",
+    "bedrooms": 3,
+    "bathrooms": "1.0",
+    "property_type": "townhouse",
+    "thumbnail_url": "https://picsum.photos/seed/property-100/800/600",
+    "agent": {
+      "id": 508,
+      "full_name": "Nischal Thapa",
+      "phone": "+977-9800001003",
+      "agency_name": "Metro Nest"
+    },
+    "description": "Garden Villa in Bharatpur. Easy commute. Spacious layout with practical floor plan and bright interiors.",
+    "street_address": "129 Maple Street",
+    "postcode": "44200",
+    "country": "Nepal"
+  }
+}
+```
+
+Sample `/api/v1/listings/1` response (admin with `X-Admin: true`):
+
+```json
+{
+  "data": {
+    "id": 1,
+    "title": "Garden Villa in Bharatpur",
+    "headline": "Townhouse with 3 bed, 1.0 bath",
+    "listing_status": "active",
+    "suburb": "Bharatpur",
+    "state": "Bagmati",
+    "price": 740522.53,
+    "currency": "RS",
+    "bedrooms": 3,
+    "bathrooms": "1.0",
+    "property_type": "townhouse",
+    "thumbnail_url": "https://picsum.photos/seed/property-100/800/600",
+    "agent": {
+      "id": 508,
+      "full_name": "Nischal Thapa",
+      "phone": "+977-9800001003",
+      "agency_name": "Metro Nest"
+    },
+    "description": "Garden Villa in Bharatpur. Easy commute. Spacious layout with practical floor plan and bright interiors.",
+    "street_address": "129 Maple Street",
+    "postcode": "44200",
+    "country": "Nepal",
+    "internal_status_notes": "Needs final photo selection before publish."
+  }
+}
+```
+
 ## Testing
 
 ### Backend tests
